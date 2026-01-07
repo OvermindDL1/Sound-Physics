@@ -39,9 +39,9 @@ import java.util.regex.Pattern;
 	dependencies="before:computronics;required-after:gtnhmixins@[2.0.0,)") // Dependencies to make sure that SP's config is loaded before patching Computronics
 public class SoundPhysics {
 
-	public static final String modid = "@MODID@";
-	public static final String modName = "@MODNAME@";
-	public static final String version = "@VERSION@";
+	public static final String modid = "soundphysics";
+	public static final String modName = "Sound-Physics";
+	public static final String version = Tags.VERSION;
 	public static final String mcVersion = "1.7.10";
 
 	private static final Pattern rainPattern = Pattern.compile(".*rain.*");
@@ -358,7 +358,7 @@ public class SoundPhysics {
 		if (Config.noteBlockEnable && soundCat == SoundCategory.RECORDS && noteBlockPattern.matcher(soundName).matches()) soundCat = SoundCategory.BLOCKS;
 		evaluateEnvironment(sourceID, posX, posY, posZ,soundCat,soundName);
 		if (!Config.dynamicEnvironementEvalutaion) return;
-		if ((mc.thePlayer == null | mc.theWorld == null | posY <= 0 | soundCat == SoundCategory.RECORDS 
+		if ((mc.thePlayer == null | mc.theWorld == null | posY <= 0 | soundCat == SoundCategory.RECORDS
 		| soundCat == SoundCategory.MUSIC) || (Config.skipRainOcclusionTracing && rainPattern.matcher(soundName).matches())) return;
 		Source tmp = new Source(sourceID,posX,posY,posZ,soundCat,soundName);
 		if (source_check(tmp)) return;
@@ -370,7 +370,7 @@ public class SoundPhysics {
 	 */
 	public static SoundBuffer onLoadSound(SoundBuffer buff, String filename) {
 		if (buff == null || buff.audioFormat.getChannels() == 1 || !Config.autoSteroDownmix) return buff;
-		if (mc.thePlayer == null | mc.theWorld == null | lastSoundCategory == SoundCategory.RECORDS 
+		if (mc.thePlayer == null | mc.theWorld == null | lastSoundCategory == SoundCategory.RECORDS
 		| lastSoundCategory == SoundCategory.MUSIC | uiPattern.matcher(filename).matches() | clickPattern.matcher(filename).matches()) {
 			if (Config.autoSteroDownmixLogging) log("Not converting sound '"+filename+"'("+buff.audioFormat.toString()+")");
 			return buff;
@@ -437,7 +437,7 @@ public class SoundPhysics {
 			else if (cansnow) return true;
 			else return false;*/
 								//canSnowAt() but the name isn't there
-			return (mc.theWorld.func_147478_e((int)position.xCoord,(int)position.yCoord,(int)position.zCoord, false) | 
+			return (mc.theWorld.func_147478_e((int)position.xCoord,(int)position.yCoord,(int)position.zCoord, false) |
 				mc.theWorld.getBiomeGenForCoords((int)position.xCoord,(int)position.zCoord).getEnableSnow()) ? 1 : 0;
 		}
 	}
@@ -519,7 +519,7 @@ public class SoundPhysics {
 			offsetY = 0.13;
 		}
 
-		if (category == SoundCategory.BLOCKS || blockPattern.matcher(name).matches() || 
+		if (category == SoundCategory.BLOCKS || blockPattern.matcher(name).matches() ||
 			!mc.theWorld.isAirBlock((int)Math.floor(soundX),(int)Math.floor(soundY),(int)Math.floor(soundZ))) {
 			// The ray will probably hit the block that it's emitting from
 			// before
@@ -591,15 +591,15 @@ public class SoundPhysics {
 			AL10.alSourcePause(sourceID);
 			log("paused, time "+String.valueOf(time));
 
-			new java.util.Timer().schedule( 
+			new java.util.Timer().schedule(
 				new java.util.TimerTask() {
 					@Override
 					public void run() {
 						log("play, time "+String.valueOf(time));
 						AL10.alSourcePlay(sourceID);
 					}
-				}, 
-				(long)time 
+				},
+				(long)time
 			);*/
 
 			Vec3 rayOrigin = soundPos;
