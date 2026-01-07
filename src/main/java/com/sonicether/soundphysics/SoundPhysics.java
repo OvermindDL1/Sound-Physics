@@ -47,7 +47,7 @@ public class SoundPhysics {
 	private static final Pattern rainPattern = Pattern.compile(".*rain.*");
 	private static final Pattern stepPattern = Pattern.compile(".*step.*");
 	private static final Pattern blockPattern = Pattern.compile(".*block.*");
-	private static final Pattern uiPattern = Pattern.compile(".*\\/ui\\/.*");
+	private static final Pattern uiPattern = Pattern.compile(".*/ui/.*");
 	private static final Pattern clickPattern = Pattern.compile(".*random.click.*");
 	private static final Pattern noteBlockPattern = Pattern.compile(".*note/.*");
 
