@@ -1,11 +1,21 @@
-[
 {
-  "modid": "$modId",
-  "name": "$modName",
-  "description": "Provides realistic sound attenuation, reverberation, and absorption through blocks.",
-  "mcversion": "$minecraftVersion",
-  "version": "$modVersion",
-  "url": "https://github.com/mist475/Sound-Physics",
-  "authorList": ["Sonic Ether","daipenger","djpadbit","Mist475"]
+  "modListVersion": 2,
+  "modList": [{
+    "modid": "${modId}",
+    "name": "${modName}",
+    "description": "Provides realistic sound attenuation, reverberation, and absorption through blocks.",
+    "version": "${modVersion}",
+    "mcversion": "${minecraftVersion}",
+    "url": "https://github.com/mist475/Sound-Physics",
+    "updateUrl": "",
+    "authorList": ["Sonic Ether", "daipenger", "djpadbit", "Mist475"],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "parent": "",
+    "requiredMods": [],
+    "dependencies": [],
+    "dependants": [],
+    "useDependencyInformation": false
+  }]
 }
-]
