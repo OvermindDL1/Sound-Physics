@@ -44,7 +44,6 @@ public class SoundPhysics {
 	public static final String version = Tags.VERSION;
 	public static final String mcVersion = "1.7.10";
 
-	private static final Pattern rainPattern = Pattern.compile(".*rain.*");
 	private static final Pattern stepPattern = Pattern.compile(".*step.*");
 	private static final Pattern blockPattern = Pattern.compile(".*block.*");
 	private static final Pattern uiPattern = Pattern.compile(".*/ui/.*");
@@ -358,8 +357,8 @@ public class SoundPhysics {
 		if (Config.noteBlockEnable && soundCat == SoundCategory.RECORDS && noteBlockPattern.matcher(soundName).matches()) soundCat = SoundCategory.BLOCKS;
 		evaluateEnvironment(sourceID, posX, posY, posZ,soundCat,soundName);
 		if (!Config.dynamicEnvironementEvalutaion) return;
-		if ((mc.thePlayer == null | mc.theWorld == null | posY <= 0 | soundCat == SoundCategory.RECORDS
-		| soundCat == SoundCategory.MUSIC) || (Config.skipRainOcclusionTracing && rainPattern.matcher(soundName).matches())) return;
+		if ((mc.thePlayer == null || mc.theWorld == null || posY <= 0 || soundCat == SoundCategory.RECORDS || soundCat == SoundCategory.MUSIC)
+				|| (Config.skipRainOcclusionTracing && soundCat == SoundCategory.WEATHER)) return;
 		Source tmp = new Source(sourceID,posX,posY,posZ,soundCat,soundName);
 		if (source_check(tmp)) return;
 		source_list.add(tmp);
@@ -370,8 +369,8 @@ public class SoundPhysics {
 	 */
 	public static SoundBuffer onLoadSound(SoundBuffer buff, String filename) {
 		if (buff == null || buff.audioFormat.getChannels() == 1 || !Config.autoSteroDownmix) return buff;
-		if (mc.thePlayer == null | mc.theWorld == null | lastSoundCategory == SoundCategory.RECORDS
-		| lastSoundCategory == SoundCategory.MUSIC | uiPattern.matcher(filename).matches() | clickPattern.matcher(filename).matches()) {
+		if (mc.thePlayer == null || mc.theWorld == null || lastSoundCategory == SoundCategory.RECORDS
+		|| lastSoundCategory == SoundCategory.MUSIC || uiPattern.matcher(filename).matches() || clickPattern.matcher(filename).matches()) {
 			if (Config.autoSteroDownmixLogging) log("Not converting sound '"+filename+"'("+buff.audioFormat.toString()+")");
 			return buff;
 		}
@@ -545,15 +544,15 @@ public class SoundPhysics {
 
 	private static void evaluateEnvironment(final int sourceID, final float posX, final float posY, final float posZ, final SoundCategory category, final String name) {
 		try {
-			if (mc.thePlayer == null | mc.theWorld == null | posY <= 0 | category == SoundCategory.RECORDS
-					| category == SoundCategory.MUSIC) {
+			if (mc.thePlayer == null || mc.theWorld == null || posY <= 0 || category == SoundCategory.RECORDS
+					|| category == SoundCategory.MUSIC) {
 				// posY <= 0 as a condition has to be there: Ingame
 				// menu clicks do have a player and world present
 				setEnvironment(sourceID, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
 				return;
 			}
 
-			final boolean isRain = rainPattern.matcher(name).matches();
+			final boolean isRain = category == SoundCategory.WEATHER;
 
 			if (Config.skipRainOcclusionTracing && isRain) {
 				setEnvironment(sourceID, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f);
